@@ -1,0 +1,52 @@
+services:
+  urisys-env:
+    build: .
+    image: urisys-env-demo:local
+    container_name: urisys-env-demo
+    ports:
+      - "8790:8790"
+    env_file:
+      - ./docker/env/urisys.env
+    environment:
+      # These can also be declared in env-policy.yaml. Keeping them here makes
+      # the runtime self-describing even when a different policy file is mounted.
+      URISYS_ENV_PUBLIC_VARS: APP_NAME,APP_ENV,APP_VERSION,URISYS_NODE_ID,URISYS_RUNTIME_MODE,FEATURE_FLAG_DEMO
+      URISYS_ENV_PUBLIC_PREFIXES: APP_PUBLIC_
+      URISYS_ENV_SECRET_VARS: SMTP_PASSWORD,MARKPACT_TOKEN,OPENAI_API_KEY
+      URISYS_ENV_MUTABLE_VARS: FEATURE_FLAG_DEMO
+      URISYS_DOCKER_SECRETS_DIR: /run/secrets
+      # Keep 0 in production. Set to 1 only for controlled tests/debugging.
+      URISYS_ALLOW_SECRET_READ: "0"
+    secrets:
+      - smtp_password
+      - markpact_token
+    volumes:
+      - ./docker/config/env-policy.yaml:/etc/urisys/env-policy.yaml:ro
+      - ./output:/app/output
+    command:
+      - urisys
+      - serve
+      - --packs
+      - env
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8790"
+      - --env-config
+      - /etc/urisys/env-policy.yaml
+
+  e2e:
+    build: .
+    image: urisys-env-demo:local
+    depends_on:
+      - urisys-env
+    environment:
+      URISYS_BASE_URL: http://urisys-env:8790
+    command: ["python", "/app/tests/e2e_env.py"]
+    profiles: ["test"]
+
+secrets:
+  smtp_password:
+    file: ./docker/secrets/smtp_password.txt
+  markpact_token:
+    file: ./docker/secrets/markpact_token.txt

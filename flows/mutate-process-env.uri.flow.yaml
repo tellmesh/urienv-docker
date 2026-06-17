@@ -1,0 +1,16 @@
+flow:
+  id: mutate-process-env-demo
+  description: Demonstrates process-local mutation through env://.
+
+defaults:
+  approved: true
+  dry_run: false
+  continue_on_error: false
+
+do:
+  - env://runtime/var/FEATURE_FLAG_DEMO/query/value
+  - env://runtime/var/FEATURE_FLAG_DEMO/command/set:
+      value: on
+  - env://runtime/var/FEATURE_FLAG_DEMO/query/value
+  - env://runtime/var/FEATURE_FLAG_DEMO/command/unset
+  - env://runtime/var/FEATURE_FLAG_DEMO/query/exists

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "urienv-docker-example"
+version = "0.1.0"
+description = "Docker glue for env:// URI capability pack"
+requires-python = ">=3.10"
+dependencies = [
+  "PyYAML>=6.0",
+  "uricore>=0.1.2",
+  "urisysedge>=0.1.0",
+  "urienv>=0.1.0",
+]
+
+[tool.uv.sources]
+urienv = { path = "../../urienv", editable = true }
+urisysedge = { path = "../../urisysedge", editable = true }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

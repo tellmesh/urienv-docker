@@ -1,0 +1,36 @@
+# This file is mounted into the container as /etc/urisys/env-policy.yaml.
+# It decides which process env vars are visible through env://.
+public_vars:
+  - APP_NAME
+  - APP_ENV
+  - APP_VERSION
+  - URISYS_NODE_ID
+  - URISYS_RUNTIME_MODE
+  - FEATURE_FLAG_DEMO
+  - URISYS_ALLOW_REAL
+  - LLM_MODEL
+  - LLM_BASE_URL
+  - LLM_TEMPERATURE
+  - LLM_MAX_TOKENS
+
+# You may also expose groups by prefix, e.g. APP_PUBLIC_*
+public_prefixes:
+  - APP_PUBLIC_
+
+# Secret values are never returned by normal env://runtime/var/... calls.
+# They can be listed only masked. Full read needs both approval and allow_secret_read.
+secret_vars:
+  - SMTP_PASSWORD
+  - MARKPACT_TOKEN
+  - OPENAI_API_KEY
+  - OPENROUTER_API_KEY
+  - LLM_API_KEY
+secret_prefixes:
+  - SECRET_
+
+# Runtime mutation is process-local only. It does not rewrite Docker env files.
+mutable_vars:
+  - FEATURE_FLAG_DEMO
+
+docker_secrets_dir: /run/secrets
+include_process_metadata: true

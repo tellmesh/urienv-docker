@@ -1,0 +1,15 @@
+flow:
+  id: startup-env-check
+  description: Verify that env:// is available during urisys startup.
+
+defaults:
+  approved: false
+  dry_run: false
+  continue_on_error: false
+
+do:
+  - env://runtime/query/health
+  - env://runtime/config/query/startup
+  - env://runtime/var/APP_NAME/query/value
+  - env://runtime/var/FEATURE_FLAG_DEMO/query/value
+  - env://runtime/secret/SMTP_PASSWORD/query/masked
