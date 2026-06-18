@@ -108,7 +108,7 @@ Test sprawdza:
 
 ```text
 packages/python/urienv/              # env:// pack
-packages/python/urisysedge/          # mały runtime urisys: call/serve/flow
+packages/python/`uricore` (`uri_control.edge`)/          # mały runtime urisys: call/serve/flow
 vendor/uricore/                      # parser/registry/dispatcher/policy/event store
 docker-compose.yml                   # pełny stack demo
 docker/config/env-policy.yaml        # allowlist i policy env://
@@ -127,3 +127,18 @@ markpacts/*.markpact.md              # kontrakt i implementacja Markpact
 3. Pełne sekrety wymagają `approved=true` oraz `allow_secret_read=true` albo `URISYS_ALLOW_SECRET_READ=1`.
 
 W produkcji nie ustawiaj `URISYS_ALLOW_SECRET_READ=1`, chyba że uruchamiasz kontrolowany serwis wewnętrzny.
+
+## Ekosystem TellMesh
+
+Orchestrator: **[urisys](https://github.com/tellmesh/urisys)** · Mapa: **[MESH.md](https://github.com/tellmesh/urisys/blob/main/docs/MESH.md)** · Model: **[ECOSYSTEM.md](https://github.com/tellmesh/urisys/blob/main/../docs/ECOSYSTEM.md)**
+
+| Pole | Wartość |
+|------|---------|
+| **Warstwa** | Docker glue |
+| **Scheme** | `env://` |
+| **Zależność** | uricore (`uri_control`) |
+
+Runtime edge: **`uri_control.edge`** w pakiecie **`uricore`** (legacy `urisysedge` usunięty 2026-06).
+Router intencji: **`urirouter`** (`uri_router`) — resolve + HTTP/MQTT delegate.
+
+<!-- end-ecosystem -->
