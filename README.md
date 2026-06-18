@@ -1,3 +1,5 @@
+> **DEPRECATED (2026-06-18):** the Docker deployment now lives inside the `urienv` package at [`urienv/docker/`](https://github.com/tellmesh/urienv/tree/main/docker). This repo is no longer maintained.
+
 # urisys-env-docker
 
 Pełna, minimalna implementacja `env://` dla `urisys` uruchamiana w Docker Compose.
