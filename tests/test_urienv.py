@@ -1,8 +1,14 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
+
 from uri_control import CapabilityRegistry, InMemoryEventStore, UriControlRuntime
-from urisysedge.pack_loader import manifest_paths
+
+
+def manifest_paths(schemes: list[str]) -> list[Path]:
+    root = Path(__file__).resolve().parents[1].parent / "urienv"
+    return [root / "manifest.yaml"] if "env" in schemes else []
 
 
 def runtime():

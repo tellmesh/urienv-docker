@@ -10,7 +10,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1
 
 WORKDIR /build
-COPY urisysedge /build/urisysedge
+COPY urirouter /build/urirouter
+COPY uricore /build/uricore
 COPY urienv /build/urienv
 COPY urienv-docker /build/urienv-docker
 COPY urienv-docker/docker/config /app/docker/config
@@ -18,8 +19,8 @@ COPY urienv-docker/flows /app/flows
 COPY urienv-docker/tests /app/tests
 
 RUN pip install --upgrade pip \
-    && pip install -e /build/urisysedge -e /build/urienv -e /build/urienv-docker \
-    && printf '%s\n' '#!/usr/bin/env sh' 'exec python -m urisysedge.cli "$@"' > /usr/local/bin/urisys \
+    && pip install -e /build/urirouter -e /build/uricore -e /build/urienv -e /build/urienv-docker \
+    && printf '%s\n' '#!/usr/bin/env sh' 'exec python -m uri_control.edge.cli "$@"' > /usr/local/bin/urisys \
     && chmod +x /usr/local/bin/urisys \
     && ln -s /usr/local/bin/urisys /usr/local/bin/urisys-edge
 

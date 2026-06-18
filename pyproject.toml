@@ -10,13 +10,11 @@ requires-python = ">=3.10"
 dependencies = [
   "PyYAML>=6.0",
   "uricore>=0.1.2",
-  "urisysedge>=0.1.0",
   "urienv>=0.1.0",
 ]
 
 [tool.uv.sources]
 urienv = { path = "../../urienv", editable = true }
-urisysedge = { path = "../../urisysedge", editable = true }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
